@@ -1,6 +1,6 @@
 const todoBox = document.querySelector(".todo-box");
 const todoBtn = document.querySelector(".side-todo-btn");
-const closeBtn = document.querySelector(".closeBtn");
+const todoCloseBtn = document.querySelector(".todoCloseBtn");
 const todoForm = document.querySelector(".todo-form");
 const todoInput = document.querySelector(".todo-form input");
 const todoList = document.querySelector(".todo-list");
@@ -12,24 +12,39 @@ const timeField = document.querySelector(".time-field");
 const planTime = document.querySelector("#planTime");
 const selectedTime = document.querySelector("#selectedTime");
 
+const plannerForm = document.querySelector(".planner-form");
+const plannerList = document.querySelector(".planner-list");
+const plannerItem = document.querySelector(".planner-item");
+const plannerInput = document.querySelector(".planner-form input[type='text']");
+const plannerCloseBtn = document.querySelector(".plannerCloseBtn");
 
 let todos = [];
+let plans = [];
 let currentFilter = "all";
 
 
+function closeAllBoxes() {
+  todoBox.style.display = "none";
+  plannerBox.style.display = "none";
+}
+
 todoBtn.addEventListener("click", () => {
+  closeAllBoxes();
   todoBox.style.display = "flex";
 });
 
-closeBtn.addEventListener("click", () => {
+todoCloseBtn.addEventListener("click", () => {
   todoBox.style.display = "none";
 });
 
-
 plannerBtn.addEventListener("click", () => {
+  closeAllBoxes();
   plannerBox.style.display = "flex";
 });
 
+plannerCloseBtn.addEventListener("click", () => {
+  plannerBox.style.display = "none";
+});
 timeField.addEventListener("click", () => {
   planTime.showPicker();
 });
@@ -38,6 +53,8 @@ planTime.addEventListener("change", () => {
   selectedTime.innerText = planTime.value;
 });
 
+
+// todo submit event
 todoForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
@@ -72,6 +89,34 @@ filterBtns.forEach((btn) => {
     renderTodos();
   });
 });
+
+// plan submit
+
+plannerForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+
+  let planValue = plannerInput.value.trim();
+  let selectedTimeValue = planTime.value;
+
+  if (planValue === "" || selectedTimeValue === "") {
+    alert("Please Enter your plan and select time");
+    return;
+  }
+
+  let planObj = {
+    id: Date.now(),
+    title: planValue,
+    time: selectedTimeValue,
+  };
+
+  plans.push(planObj);
+  renderPlans();
+  plannerInput.value = "";
+  planTime.value = "";
+});
+
+//  todo render
 
 function renderTodos() {
   todoList.innerHTML = "";
@@ -145,4 +190,38 @@ function toggleImportant(id) {
   });
 
   renderTodos();
+}
+
+function renderPlans() {
+  plannerList.innerHTML = "";
+
+  plans.forEach((plan) => {
+    let div = document.createElement("div");
+    div.classList.add("planner-item");
+
+    div.innerHTML = `
+            <span class="plan-time">
+              <i class="ri-time-line"></i>
+              ${plan.time}
+            </span>
+
+            <p>${plan.title}</p>
+
+            <div class="planner-actions">
+
+              <button onclick="deletePlan(${plan.id})" class="delete-btn">
+                <i class="ri-delete-bin-line"></i>
+              </button>
+          </div>`;
+
+    plannerList.appendChild(div);
+  });
+}
+
+function deletePlan(id){
+  plans = plans.filter((plan) => {
+    return plan.id !== id;
+  });
+
+  renderPlans();
 }

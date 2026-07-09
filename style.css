@@ -226,12 +226,12 @@ body {
 }
 
 .quote-card span {
-  font-size:30px;
+  font-size: 30px;
   color: #8b5cf6;
 }
 
 .todo-box,
-.planner-box{
+.planner-box {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -263,7 +263,7 @@ body {
   margin-top: 6px;
 }
 
-.closeBtn {
+.todoCloseBtn {
   width: 38px;
   height: 38px;
   font-size: 20px;
@@ -305,7 +305,7 @@ body {
   cursor: pointer;
 }
 
-.planner-form i{
+.planner-form i {
   font-size: 30px;
 }
 .time-field {
@@ -319,8 +319,8 @@ body {
   align-items: center;
   gap: 12px;
 
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 .time-btn {
@@ -337,7 +337,6 @@ body {
 
   background: linear-gradient(135deg, #f0abfc, #67e8f9);
   color: #0f172a;
-  
 }
 
 .time-btn i {
@@ -374,8 +373,7 @@ body {
   background: linear-gradient(135deg, #a855f7, #38bdf8);
 }
 
-.todo-list,
-.planner-list {
+.todo-list {
   flex: 1;
   overflow-y: auto;
 
@@ -387,8 +385,7 @@ body {
   gap: 12px;
 }
 
-.todo-item,
-.planner-item {
+.todo-item {
   width: 100%;
   min-height: 65px;
 
@@ -405,6 +402,7 @@ body {
 .todo-item p {
   flex: 1;
 }
+
 .todo-item input[type="checkbox"] {
   appearance: none;
   -webkit-appearance: none;
@@ -424,11 +422,12 @@ body {
   place-items: center;
 }
 
-.todo-item input[type="checkbox"]:checked {
+.todo-item input[type="checkbox"] {
   background: linear-gradient(135deg, #8b5cf6, #38bdf8);
   border-color: transparent;
 }
-.todo-item input[type="checkbox"]:checked::before {
+.todo-item input[type="checkbox"]
+{
   content: "✓";
   color: white;
   font-size: 14px;
@@ -441,7 +440,7 @@ body {
 }
 
 .todo-actions {
-   margin-left:auto;
+  margin-left: auto;
 }
 
 .todo-actions button {
@@ -480,16 +479,16 @@ body {
   background: linear-gradient(180deg, #c084fc, #7dd3fc);
 }
 
-.star-btn i{
-    font-size:18px;
+.star-btn i {
+  font-size: 18px;
 }
 
-.star-btn .ri-star-fill{
-    color:#facc15;
+.star-btn .ri-star-fill {
+  color: #facc15;
 }
 
-.star-btn .ri-star-line{
-    color:#ff9aa2;
+.star-btn .ri-star-line {
+  color: #ff9aa2;
 }
 
 .planner-list {
@@ -512,8 +511,8 @@ body {
   align-items: center;
   gap: 16px;
 
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .planner-item p {
@@ -532,8 +531,8 @@ body {
   gap: 7px;
 
   color: #d8b4fe;
-  background: rgba(168,85,247,0.14);
-  border: 1px solid rgba(168,85,247,0.35);
+  background: rgba(168, 85, 247, 0.14);
+  border: 1px solid rgba(168, 85, 247, 0.35);
 
   font-weight: 700;
   font-size: 14px;
@@ -551,4 +550,22 @@ body {
   border-radius: 50%;
   border: none;
   cursor: pointer;
+  transition: 0.3s;
+}
+.planner-actions .delete-btn{
+    background: rgba(255,107,107,.12);
+    border: 1px solid rgba(255,107,107,.35);
+    color: #ff6b6b;
+}
+
+
+.plannerCloseBtn {
+  width: 38px;
+  height: 38px;
+  font-size: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  color: white;
+  background: rgba(0, 0, 0, 0.15);
 }
