@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <main class="dashboard">
+      <header class="header">
+        <div class="logo"><i class="ri-github-line"></i></div>
+        <h1>Productivity <span>DashBoard</span></h1>
+
+        <div class="top-actions">
+          <button id="themeBtn">🌙 Dark Mode</button>
+          <div class="github"><i class="ri-github-fill"></i></div>
+        </div>
+      </header>
+
+      <section class="hero">
+        <h1>Good Evening, <span>Saurabh Maurya</span> 👋</h1>
+      </section>
+
+      <section class="info-card">
+        <div class="date-box">
+          <p id="date">Saturday, 5 July 2025</p>
+          <h1 id="time">08:36:03 PM</h1>
+        </div>
+
+        <hr />
+
+        <div class="weather-box">
+          <h2>28°C</h2>
+          <p>Patcy rain nearby</p>
+
+          <div class="weather-details">
+            <div>
+              <span>Humidity</span>
+              <b>82%</b>
+            </div>
+            <div>
+              <span>Wind</span>
+              <b>12 km/h</b>
+            </div>
+            <div>
+              <span>Feels Like</span>
+              <b>31°C</b>
+            </div>
+          </div>
+
+          <div class="location">📍 Faridabad, Haryana</div>
+        </div>
+      </section>
+
+      <!-- TODO -->
+
+      <section class="todo-box">
+        <div class="todo-header">
+          <div>
+            <h2>Todo List</h2>
+            <p>Manage your daily tasks</p>
+          </div>
+          <button class="closeBtn"><i class="ri-close-fill"></i></button>
+        </div>
+
+        <form class="todo-form">
+          <input type="text" placeholder="Enter your task...." />
+          <button type="submit">Add</button>
+        </form>
+
+        <div class="todo-filters">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="pending">Pending</button>
+          <button class="filter-btn" data-filter="completed">Completed</button>
+        </div>
+
+        <div class="todo-list"></div>
+      </section>
+
+      <!-- planner -->
+      <section class="planner-box">
+        <div class="planner-header">
+          <div>
+            <h2>Daily Planner</h2>
+            <p>Plan your day stay productive ⭐</p>
+          </div>
+          <button class="closeBtn"><i class="ri-close-fill"></i></button>
+        </div>
+
+        <form class="planner-form">
+          <div class="time-field">
+            <button type="button" class="time-btn">
+              <i class="ri-time-line"></i>
+            </button>
+
+            <span id="selectedTime">Select Time</span>
+
+            <input type="time" id="planTime" />
+          </div>
+
+          <input type="text" placeholder="Enter your plan...." />
+          <button type="submit">Add</button>
+        </form>
+
+        <div class="planner-list">
+          <div class="planner-item">
+            <input type="checkbox" />
+
+            <span class="plan-time">
+              <i class="ri-time-line"></i>
+              09:30
+            </span>
+
+            <p>React project complete karna</p>
+
+            <div class="planner-actions">
+              <button class="star-btn">
+                <i class="ri-star-line"></i>
+              </button>
+
+              <button class="delete-btn">
+                <i class="ri-delete-bin-line"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="side-menu">
+        <button class="side-todo-btn"><i>✅</i><span>Todo</span></button>
+        <button class="side-plan-btn"><i>📅</i><span>Planner</span></button>
+        <button><i>💬</i><span>Quotes</span></button>
+        <button><i>⏱️</i><span>Timer</span></button>
+        <button><i>🎯</i><span>Goals</span></button>
+        <button><i>⚙️</i><span>Settings</span></button>
+      </aside>
+
+      <section class="quote-card">
+        <p>
+          <span>“</span> Discipline is choosing between what you want now and
+          what you want most.”
+        </p>
+        <button>New Quote</button>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
