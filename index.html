@@ -28,32 +28,32 @@
 
       <section class="info-card">
         <div class="date-box">
-          <p id="date">Saturday, 5 July 2025</p>
-          <h1 id="time">08:36:03 PM</h1>
+          <p id="date"></p>
+          <h1 id="time">0</h1>
         </div>
 
         <hr />
 
         <div class="weather-box">
-          <h2>28°C</h2>
-          <p>Patcy rain nearby</p>
+          <h2 id="temp">--°C</h2>
+          <p id="condition">Loading weather...</p>
 
           <div class="weather-details">
             <div>
               <span>Humidity</span>
-              <b>82%</b>
+              <b id="humidity">--%</b>
             </div>
             <div>
               <span>Wind</span>
-              <b>12 km/h</b>
+              <b id="wind">-- km/h</b>
             </div>
             <div>
               <span>Feels Like</span>
-              <b>31°C</b>
+              <b id="feelsLike">--°C</b>
             </div>
           </div>
 
-          <div class="location">📍 Faridabad, Haryana</div>
+          <div class="location" id="weatherLocation">📍  Getting location...</div>
         </div>
       </section>
 
@@ -107,26 +107,45 @@
           <button type="submit">Add</button>
         </form>
 
-        <div class="planner-list">
-          
+        <div class="planner-list"></div>
+      </section>
+
+      <!-- Quote -->
+
+      <section class="quotes-box">
+        <div class="quotes-header">
+          <div>
+            <h2>Daily Quotes</h2>
+            <p>Stay motivated every day 🚀</p>
+          </div>
+
+          <button class="quotesCloseBtn">
+            <i class="ri-close-fill"></i>
+          </button>
         </div>
+
+        <div class="quotes-list"></div>
+
+        <button class="new-quote-btn">New Quote</button>
+
+
       </section>
 
       <aside class="side-menu">
         <button class="side-todo-btn"><i>✅</i><span>Todo</span></button>
         <button class="side-plan-btn"><i>📅</i><span>Planner</span></button>
-        <button><i>💬</i><span>Quotes</span></button>
+        <button class="side-quote-btn"><i>💬</i><span>Quotes</span></button>
         <button><i>⏱️</i><span>Timer</span></button>
         <button><i>🎯</i><span>Goals</span></button>
-        <button><i>⚙️</i><span>Settings</span></button>
       </aside>
 
       <section class="quote-card">
-        <p>
-          <span>“</span> Discipline is choosing between what you want now and
+        <p id="quote-text">
+          <span></span> Discipline is choosing between what you want now and
           what you want most.”
         </p>
-        <button>New Quote</button>
+
+        <button id="newQuoteBtn">New Quote</button>
       </section>
     </main>
 

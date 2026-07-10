@@ -18,14 +18,34 @@ const plannerItem = document.querySelector(".planner-item");
 const plannerInput = document.querySelector(".planner-form input[type='text']");
 const plannerCloseBtn = document.querySelector(".plannerCloseBtn");
 
+const dateBox = document.querySelector("#date");
+const timeBox = document.querySelector("#time");
+
+const quoteBox = document.querySelector(".quotes-box");
+const quoteBtn = document.querySelector(".side-quote-btn");
+const quoteCloseBtn = document.querySelector(".quotesCloseBtn");
+
+const quotesList = document.querySelector(".quotes-list");
+const quoteAuthor = document.querySelector(".quoteAuthor");
+const newQuoteBtn = document.querySelector(".new-quote-btn");
+const dashQuoteBtn = document.querySelector("#newQuoteBtn");
+const quoteText = document.querySelector("#quote-text");
+
+const tempEl = document.querySelector("#temp");
+const conditionEl = document.querySelector("#condition");
+const humidityEl = document.querySelector("#humidity");
+const windEl = document.querySelector("#wind");
+const feelsLikeEl = document.querySelector("#feelsLike");
+const weatherLocationEl = document.querySelector("#weatherLocation");
+
 let todos = [];
 let plans = [];
 let currentFilter = "all";
 
-
 function closeAllBoxes() {
   todoBox.style.display = "none";
   plannerBox.style.display = "none";
+  quoteBox.style.display = "none";
 }
 
 todoBtn.addEventListener("click", () => {
@@ -53,7 +73,15 @@ planTime.addEventListener("change", () => {
   selectedTime.innerText = planTime.value;
 });
 
+quoteBtn.addEventListener("click", () => {
+  closeAllBoxes();
+  quoteBox.style.display = "flex";
+  getQuote();
+});
 
+quoteCloseBtn.addEventListener("click", () => {
+  quoteBox.style.display = "none";
+});
 // todo submit event
 todoForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -94,7 +122,6 @@ filterBtns.forEach((btn) => {
 
 plannerForm.addEventListener("submit", (e) => {
   e.preventDefault();
-
 
   let planValue = plannerInput.value.trim();
   let selectedTimeValue = planTime.value;
@@ -218,10 +245,233 @@ function renderPlans() {
   });
 }
 
-function deletePlan(id){
+function deletePlan(id) {
   plans = plans.filter((plan) => {
     return plan.id !== id;
   });
 
   renderPlans();
 }
+
+function updateDateTime() {
+  let now = new Date();
+
+  dateBox.innerText = now.toDateString();
+
+  timeBox.innerText = now.toLocaleTimeString();
+}
+
+setInterval(updateDateTime, 1000);
+updateDateTime();
+
+newQuoteBtn.addEventListener("click", () => {
+  getQuote();
+});
+dashQuoteBtn.addEventListener("click", () => {
+  getDashboardQuote();
+});
+// quotes
+
+async function getQuote() {
+  try {
+    // Button ko loading state me daal rahe hain
+    newQuoteBtn.disabled = true;
+    newQuoteBtn.innerText = "Loading...";
+
+    const response = await fetch("https://dummyjson.com/quotes/random");
+
+    if (!response.ok) {
+      throw new Error("Quote API response failed");
+    }
+
+    const data = await response.json();
+
+    quotesList.innerHTML = `
+      <div class="quote-item">
+
+        <p>${data.quote}</p>
+
+        <span class="quote-author">
+          — ${data.author}
+        </span>
+      </div>
+    `;
+  } catch (error) {
+    // quotesList.innerHTML = `
+    //   <div class="quote-item">
+    //     <div class="quote-icon">!</div>
+    //     <p>Quote load nahi ho paya. Please try again.</p>
+    //     <span class="quote-author">
+    //       — Error
+    //     </span>
+    //   </div>
+    // `;
+  } finally {
+    newQuoteBtn.disabled = false;
+    newQuoteBtn.innerText = "New Quote";
+  }
+}
+async function getDashboardQuote() {
+  try {
+    const response = await fetch("https://dummyjson.com/quotes/random");
+    const data = await response.json();
+
+    quoteText.innerText = data.quote;
+  } catch (error) {}
+}
+
+//
+
+function loadWeather() {
+  conditionEl.innerText = "Getting your location...";
+  weatherLocationEl.innerText = "📍 Locating...";
+
+  if (!navigator.geolocation) {
+    conditionEl.innerText = "Location not supported";
+
+    // Faridabad fallback
+    getWeather(28.4089, 77.3178, "Faridabad, Haryana");
+
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    function (position) {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+
+      getWeather(latitude, longitude);
+      getCityName(latitude, longitude);
+    },
+
+    function (error) {
+      conditionEl.innerText = "Location denied, showing default city";
+
+      // Permission deny hone par Faridabad
+      getWeather(28.4089, 77.3178, "Faridabad, Haryana");
+    },
+  );
+}
+
+async function getWeather(latitude, longitude, locationName) {
+  try {
+    conditionEl.innerText = "Loading weather...";
+
+    const apiUrl =
+      `https://api.open-meteo.com/v1/forecast` +
+      `?latitude=${latitude}` +
+      `&longitude=${longitude}` +
+      `&current=temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m,weather_code` +
+      `&timezone=auto`;
+
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      throw new Error("Weather API failed");
+    }
+
+    const data = await response.json();
+
+    const weather = data.current;
+
+    tempEl.innerText = `${Math.round(weather.temperature_2m)}°C`;
+
+    humidityEl.innerText = `${weather.relative_humidity_2m}%`;
+
+    windEl.innerText = `${weather.wind_speed_10m} km/h`;
+
+    feelsLikeEl.innerText = `${Math.round(weather.apparent_temperature)}°C`;
+
+    conditionEl.innerText = getWeatherCondition(weather.weather_code);
+
+    if (locationName) {
+      weatherLocationEl.innerText = `📍 ${locationName}`;
+    }
+  } catch (error) {
+    console.log("Weather error:", error);
+
+    tempEl.innerText = "--°C";
+    humidityEl.innerText = "--%";
+    windEl.innerText = "-- km/h";
+    feelsLikeEl.innerText = "--°C";
+
+    conditionEl.innerText = "Weather unavailable";
+    // weatherLocationEl.innerText = "📍 Location unavailable";
+  }
+}
+
+async function getCityName(lat, lon) {
+  try {
+    const response = await fetch(
+      `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`
+    );
+
+    if (!response.ok) {
+      throw new Error("Geocoding API failed");
+    }
+
+    const data = await response.json();
+    console.log(data);
+
+    const city =
+      data.city ||
+      data.locality ||
+      data.principalSubdivision ||
+      "Unknown";
+
+    const state = data.principalSubdivision || data.countryName || "";
+
+    weatherLocationEl.innerText = state
+      ? `📍 ${city}, ${state}`
+      : `📍 ${city}`;
+  } catch (error) {
+    console.log(error);
+    weatherLocationEl.innerText = "📍 Current Location";
+  }
+}
+
+function getWeatherCondition(code) {
+  if (code === 0) {
+    return "Clear sky";
+  }
+
+  if (code === 1) {
+    return "Mainly clear";
+  }
+
+  if (code === 2) {
+    return "Partly cloudy";
+  }
+
+  if (code === 3) {
+    return "Overcast";
+  }
+
+  if (code === 45 || code === 48) {
+    return "Foggy";
+  }
+
+  if (code >= 51 && code <= 57) {
+    return "Drizzle";
+  }
+
+  if (code >= 61 && code <= 67) {
+    return "Rain";
+  }
+
+  if (code >= 71 && code <= 77) {
+    return "Snow";
+  }
+
+  if (code >= 80 && code <= 82) {
+    return "Rain showers";
+  }
+
+  if (code >= 95) {
+    return "Thunderstorm";
+  }
+
+  return "Current weather";
+}
+
+loadWeather()
