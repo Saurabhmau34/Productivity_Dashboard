@@ -38,6 +38,15 @@ const windEl = document.querySelector("#wind");
 const feelsLikeEl = document.querySelector("#feelsLike");
 const weatherLocationEl = document.querySelector("#weatherLocation");
 
+const timerBox = document.querySelector(".timer-box");
+const timerSideBtn = document.querySelector(".side-timer-btn");
+const timerCloseBtn = document.querySelector(".timerCloseBtn");
+
+const startTimerBtn = document.querySelector("#startTimerBtn");
+const pauseTimerBtn = document.querySelector("#pauseTimerBtn");
+const resetTimerBtn = document.querySelector("#resetTimerBtn");
+
+
 let todos = [];
 let plans = [];
 let currentFilter = "all";
@@ -46,6 +55,7 @@ function closeAllBoxes() {
   todoBox.style.display = "none";
   plannerBox.style.display = "none";
   quoteBox.style.display = "none";
+  timerBox.style.display = "none";
 }
 
 todoBtn.addEventListener("click", () => {
@@ -82,6 +92,20 @@ quoteBtn.addEventListener("click", () => {
 quoteCloseBtn.addEventListener("click", () => {
   quoteBox.style.display = "none";
 });
+
+timerSideBtn.addEventListener("click" , () => {
+  closeAllBoxes();
+  timerBox.style.display = "flex"; 
+});
+
+timerCloseBtn.addEventListener("click", () => {
+  timerBox.style.display = "none"
+});
+
+
+
+
+
 // todo submit event
 todoForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -243,7 +267,83 @@ function renderPlans() {
 
     plannerList.appendChild(div);
   });
+};
+
+const WORK_TIME = 25 * 60;
+const BREAK_TIME = 5 * 60;
+
+let timerSeconds = WORK_TIME;
+let timerInterval = null;
+let isWorkSession = true;
+
+function updateTimerDisplay() {
+  let minutes = Math.floor(timerSeconds / 60);
+  let seconds = timerSeconds % 60;
+
+  minutes = String(minutes).padStart(2, "0");
+  seconds = String(seconds).padStart(2, "0");
+
+  timerDisplay.innerText = `${minutes}:${seconds}`;
 }
+
+function startTimer() {
+  // Pehle se timer chal raha hai to naya interval nahi banega
+  if (timerInterval !== null) {
+    return;
+  }
+
+  timerInterval = setInterval(() => {
+    if (timerSeconds > 0) {
+      timerSeconds--;
+      updateTimerDisplay();
+    } else {
+      switchSession();
+    }
+  }, 1000);
+}
+
+function pauseTimer() {
+  clearInterval(timerInterval);
+  timerInterval = null;
+}
+
+function resetTimer() {
+  pauseTimer();
+
+  timerSeconds = isWorkSession ? WORK_TIME : BREAK_TIME;
+
+  updateTimerDisplay();
+}
+
+function switchSession() {
+  pauseTimer();
+
+  isWorkSession = !isWorkSession;
+
+  if (isWorkSession) {
+    timerSeconds = WORK_TIME;
+    sessionLabel.innerText = "Work Session";
+    sessionLabel.classList.remove("break-session");
+  } else {
+    timerSeconds = BREAK_TIME;
+    sessionLabel.innerText = "Break Session";
+    sessionLabel.classList.add("break-session");
+  }
+
+  updateTimerDisplay();
+
+  alert(
+    isWorkSession
+      ? "Break complete! Start working."
+      : "Work session complete! Take a break.",
+  );
+}
+
+startTimerBtn.addEventListener("click", startTimer);
+pauseTimerBtn.addEventListener("click", pauseTimer);
+resetTimerBtn.addEventListener("click", resetTimer);
+
+updateTimerDisplay();
 
 function deletePlan(id) {
   plans = plans.filter((plan) => {
