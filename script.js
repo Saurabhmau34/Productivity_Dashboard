@@ -46,9 +46,20 @@ const startTimerBtn = document.querySelector("#startTimerBtn");
 const pauseTimerBtn = document.querySelector("#pauseTimerBtn");
 const resetTimerBtn = document.querySelector("#resetTimerBtn");
 
+const goalsBox = document.querySelector(".goals-box");
+const sideGoalBtn = document.querySelector(".side-goal-btn");
+const goalsCloseBtn = document.querySelector(".goalsCloseBtn")
+const goalList = document.querySelector(".goal-list");
+const goalForm = document.querySelector(".goal-form");
+const goalInput = document.querySelector(".goal-form input");
+
+const greeting = document.querySelector("#greeting");
+const themeBtn = document.querySelector("#themeBtn");
+
 
 let todos = [];
 let plans = [];
+let goals = [];
 let currentFilter = "all";
 
 function closeAllBoxes() {
@@ -56,6 +67,7 @@ function closeAllBoxes() {
   plannerBox.style.display = "none";
   quoteBox.style.display = "none";
   timerBox.style.display = "none";
+  goalsBox.style.display = "none";
 }
 
 todoBtn.addEventListener("click", () => {
@@ -103,8 +115,14 @@ timerCloseBtn.addEventListener("click", () => {
 });
 
 
+sideGoalBtn.addEventListener("click",() =>{
+  closeAllBoxes();
+  goalsBox.style.display = "flex";
+})
 
-
+goalsCloseBtn.addEventListener("click", ()=>{
+  goalsBox.style.display = "none";
+})
 
 // todo submit event
 todoForm.addEventListener("submit", (e) => {
@@ -166,6 +184,32 @@ plannerForm.addEventListener("submit", (e) => {
   plannerInput.value = "";
   planTime.value = "";
 });
+
+
+goalForm.addEventListener("submit", (e) =>{
+  e.preventDefault();
+  let goalValue = goalInput.value.trim();
+
+
+  if(goalValue === ""){
+    alert("Please Enter Your Goal First..!!!");
+    return
+  }
+   let goalObj ={
+    id : Date.now(),
+    title : goalValue
+   }
+
+
+  goals.push(goalObj);
+  goalInput.value = "";
+  renderGoal();
+  
+});
+
+// theme
+
+
 
 //  todo render
 
@@ -269,6 +313,32 @@ function renderPlans() {
   });
 };
 
+
+function renderGoal () {
+  goalList.innerHTML = "";
+
+  goals.forEach((goal) => {
+    let div = document.createElement("div");
+    div.classList.add("goal-item")
+
+    div.innerHTML = `
+            <p class="goal-title">${goal.title}</p>
+
+            <button class="goal-delete-btn" onclick ="deleteGoal(${goal.id})">
+              <i class="ri-delete-bin-line"></i>
+            </button>`;
+          goalList.appendChild(div);
+  });
+  
+};
+
+function deleteGoal(id) {
+  goals = goals.filter((goal) => {
+    return goal.id !== id;
+  });
+  renderGoal();
+}
+
 const WORK_TIME = 25 * 60;
 const BREAK_TIME = 5 * 60;
 
@@ -361,8 +431,11 @@ function updateDateTime() {
   timeBox.innerText = now.toLocaleTimeString();
 }
 
-setInterval(updateDateTime, 1000);
 updateDateTime();
+setInterval(updateDateTime, 1000);
+
+updateBackground();
+setInterval(updateBackground, 60000);
 
 newQuoteBtn.addEventListener("click", () => {
   getQuote();
@@ -370,6 +443,50 @@ newQuoteBtn.addEventListener("click", () => {
 dashQuoteBtn.addEventListener("click", () => {
   getDashboardQuote();
 });
+
+function updateBackground() {
+  const hour = new Date().getHours();
+
+  if (hour >= 5 && hour < 12) {
+    document.body.style.backgroundImage = `
+      linear-gradient(rgba(5, 8, 25, 0.35), rgba(5, 8, 25, 0.55)),
+      url("./img/morning.jpg")
+    `;
+
+    greeting.innerHTML =
+      `Good Morning, <span>Saurabh Maurya</span> 👋`;
+  }
+
+  else if (hour >= 12 && hour < 17) {
+    document.body.style.backgroundImage = `
+      linear-gradient(rgba(5, 8, 25, 0.35), rgba(5, 8, 25, 0.55)),
+      url("./img/afternoon.jpg")
+    `;
+
+    greeting.innerHTML =
+      `Good Afternoon, <span>Saurabh Maurya</span> 👋`;
+  }
+
+  else if (hour >= 17 && hour < 20) {
+    document.body.style.backgroundImage = `
+      linear-gradient(rgba(5, 8, 25, 0.40), rgba(5, 8, 25, 0.65)),
+      url("./img/evening.jpg")
+    `;
+
+    greeting.innerHTML =
+      `Good Evening, <span>Saurabh Maurya</span> 👋`;
+  }
+
+  else {
+    document.body.style.backgroundImage = `
+      linear-gradient(rgba(5, 8, 25, 0.55), rgba(5, 8, 25, 0.80)),
+      url("./img/night.jpg")
+    `;
+
+    greeting.innerHTML =
+      `Good Night, <span>Saurabh Maurya</span> 👋`;
+  }
+}
 // quotes
 
 async function getQuote() {
@@ -575,3 +692,20 @@ function getWeatherCondition(code) {
 }
 
 loadWeather()
+
+themeBtn.addEventListener("click", () => {
+  document.body.classList.toggle("light-mode");
+
+  const isLightMode = document.body.classList.contains("light-mode");
+
+  if (isLightMode) {
+    themeBtn.innerText = "🌙 Dark Mode";
+    localStorage.setItem("theme", "light");
+  } else {
+    themeBtn.innerText = "☀️ Light Mode";
+    localStorage.setItem("theme", "dark");
+  }
+});
+
+
+

@@ -7,12 +7,15 @@
 
 html,
 body {
-  height: 100%;
+  min-height: 100vh;
   width: 100%;
-  color: #fff;
-  background:
-    linear-gradient(rgba(5, 8, 25, 0.45), rgba(5, 8, 25, 0.75)),
-    url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80");
+  color: #ffffff;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  transition: background-image 1s ease-in-out;
 }
 
 .dashboard {
@@ -33,6 +36,8 @@ body {
   border-radius: 50%;
   font-size: 25px;
   display: grid;
+  color: white;
+  text-decoration: none;
   cursor: pointer;
   place-items: center;
   background: rgba(255, 255, 255, 0.12);
@@ -40,6 +45,11 @@ body {
   background: linear-gradient(135deg, #6b5b9293, #1d2c33cf);
   box-shadow: 0 0 25px rgba(54, 40, 66, 0.55);
 }
+
+.github i {
+  color: white;
+}
+
 .header h1 {
   margin-right: auto;
   margin-left: 18px;
@@ -231,6 +241,7 @@ body {
 }
 
 .todo-box,
+.goals-box,
 .planner-box {
   position: fixed;
   top: 50%;
@@ -253,6 +264,7 @@ body {
 }
 
 .todo-header,
+.goals-header,
 .planner-header {
   display: flex;
   justify-content: space-between;
@@ -263,6 +275,7 @@ body {
   margin-top: 6px;
 }
 
+.goalsCloseBtn,
 .todoCloseBtn {
   width: 42px;
   height: 42px;
@@ -278,18 +291,24 @@ body {
   cursor: pointer;
   transition: 0.3s;
 }
+
+
+.goalsCloseBtn:hover,
 .todoCloseBtn:hover {
   background: rgba(239, 68, 68, 0.2);
   color: #fca5a5;
   transform: rotate(90deg);
 
 }
+
+.goal-form,
 .planner-form,
 .todo-form {
   display: flex;
   gap: 12px;
   margin: 25px 0;
 }
+.goal-form input,
 .todo-form input,
 .planner-form input {
   flex: 1;
@@ -301,10 +320,12 @@ body {
   background: rgba(255, 255, 255, 0.12);
   color: white;
 }
+.goal-form input::placeholder
 .todo-form input::placeholder {
   color: rgba(255, 255, 255, 0.6);
 }
 
+.goal-form button,
 .todo-form button,
 .planner-form button,
 .todo-filters button {
@@ -383,7 +404,7 @@ body {
 .todo-filters .active {
   background: linear-gradient(135deg, #a855f7, #38bdf8);
 }
-
+.goal-list,
 .todo-list {
   flex: 1;
   overflow-y: auto;
@@ -395,7 +416,7 @@ body {
   flex-direction: column;
   gap: 12px;
 }
-
+.goal-item,
 .todo-item {
   width: 100%;
   min-height: 65px;
@@ -404,12 +425,14 @@ body {
   align-items: center;
   gap: 18px;
 
+  font-size: 20px;
+
   padding: 18px 20px;
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
-
+.goal-item p ,
 .todo-item p {
   flex: 1;
 }
@@ -851,4 +874,133 @@ body {
 .break-session {
   background: #dcfce7;
   color: #15803d;
+}
+
+.goal-delete-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 107, 107, 0.35);
+
+  background: rgba(255, 107, 107, 0.12);
+  color: #ff6b6b;
+
+  cursor: pointer;
+  transition: 0.3s;
+
+  display: grid;
+  place-items: center;
+}
+
+.goal-delete-btn:hover {
+  background: #ef4444;
+  color: white;
+
+  transform: scale(1.08);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+}
+
+.goal-delete-btn i {
+  font-size: 18px;
+}
+
+/* LIGHT MODE */
+
+body.light-mode {
+  color: #172033;
+}
+
+/* Header */
+
+body.light-mode .header h1 {
+  color: #172033;
+}
+
+body.light-mode .hero h1 {
+  color: #172033;
+}
+
+/* Header icons and theme button */
+
+body.light-mode .logo,
+body.light-mode .github,
+body.light-mode #themeBtn {
+  color: #172033;
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 10px 30px rgba(31, 41, 55, 0.15);
+}
+
+/* Main glass cards */
+
+body.light-mode .info-card,
+body.light-mode .side-menu,
+body.light-mode .quote-card {
+  color: #172033;
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow: 0 20px 50px rgba(31, 41, 55, 0.18);
+}
+
+/* Popup boxes */
+
+body.light-mode .todo-box,
+body.light-mode .planner-box,
+body.light-mode .goals-box,
+body.light-mode .quotes-box,
+body.light-mode .timer-box {
+  color: #172033;
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+}
+
+/* Inputs */
+
+body.light-mode .todo-form input,
+body.light-mode .planner-form input,
+body.light-mode .goal-form input,
+body.light-mode .time-field {
+  color: #172033;
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(31, 41, 55, 0.15);
+}
+
+body.light-mode .todo-form input::placeholder,
+body.light-mode .planner-form input::placeholder,
+body.light-mode .goal-form input::placeholder {
+  color: rgba(23, 32, 51, 0.55);
+}
+
+/* List items */
+
+body.light-mode .todo-item,
+body.light-mode .planner-item,
+body.light-mode .goal-item {
+  color: #172033;
+  background: rgba(255, 255, 255, 0.62);
+  border-color: rgba(31, 41, 55, 0.12);
+}
+
+/* Side menu text */
+
+body.light-mode .side-menu button {
+  color: #172033;
+}
+
+/* Close buttons */
+
+body.light-mode .todoCloseBtn,
+body.light-mode .plannerCloseBtn,
+body.light-mode .goalsCloseBtn,
+body.light-mode .quotesCloseBtn,
+body.light-mode .timerCloseBtn {
+  color: #172033;
+  background: rgba(255, 255, 255, 0.65);
+}
+
+/* Quote button */
+
+body.light-mode .quote-card button {
+  color: #6d28d9;
+  background: rgba(255, 255, 255, 0.45);
 }

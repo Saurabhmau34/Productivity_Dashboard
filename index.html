@@ -18,12 +18,12 @@
 
         <div class="top-actions">
           <button id="themeBtn">🌙 Dark Mode</button>
-          <div class="github"><i class="ri-github-fill"></i></div>
+          <div class="github"><a href="https://github.com/Saurabhmau34/Productivity_Dashboard" target="_blank"><i class="ri-github-fill"></i></a></div>
         </div>
       </header>
 
       <section class="hero">
-        <h1>Good Evening, <span>Saurabh Maurya</span> 👋</h1>
+        <h1 id="greeting">Good Evening, <span>Saurabh Maurya</span> 👋</h1>
       </section>
 
       <section class="info-card">
@@ -53,7 +53,9 @@
             </div>
           </div>
 
-          <div class="location" id="weatherLocation">📍  Getting location...</div>
+          <div class="location" id="weatherLocation">
+            📍 Getting location...
+          </div>
         </div>
       </section>
 
@@ -127,57 +129,74 @@
         <div class="quotes-list"></div>
 
         <button class="new-quote-btn">New Quote</button>
-
-
       </section>
-
 
       <!-- timer -->
 
       <!-- Pomodoro Timer -->
 
-<section class="timer-box">
-  <div class="timer-header">
-    <div>
-      <h2>Focus Timer</h2>
-      <p>Stay focused and manage your time ⏱️</p>
-    </div>
+      <section class="timer-box">
+        <div class="timer-header">
+          <div>
+            <h2>Focus Timer</h2>
+            <p>Stay focused and manage your time ⏱️</p>
+          </div>
 
-    <button class="timerCloseBtn">
-      <i class="ri-close-fill"></i>
-    </button>
-  </div>
+          <button class="timerCloseBtn">
+            <i class="ri-close-fill"></i>
+          </button>
+        </div>
 
-  <div class="timer-content">
-    <p class="session-label" id="sessionLabel">Work Session</p>
+        <div class="timer-content">
+          <p class="session-label" id="sessionLabel">Work Session</p>
 
-    <h1 class="timer-display" id="timerDisplay">25:00</h1>
+          <h1 class="timer-display" id="timerDisplay">25:00</h1>
 
-    <div class="timer-controls">
-      <button type="button" id="startTimerBtn">
-        <i class="ri-play-fill"></i>
-        Start
-      </button>
+          <div class="timer-controls">
+            <button type="button" id="startTimerBtn">
+              <i class="ri-play-fill"></i>
+              Start
+            </button>
 
-      <button type="button" id="pauseTimerBtn">
-        <i class="ri-pause-fill"></i>
-        Pause
-      </button>
+            <button type="button" id="pauseTimerBtn">
+              <i class="ri-pause-fill"></i>
+              Pause
+            </button>
 
-      <button type="button" id="resetTimerBtn">
-        <i class="ri-restart-line"></i>
-        Reset
-      </button>
-    </div>
-  </div>
-</section>
+            <button type="button" id="resetTimerBtn">
+              <i class="ri-restart-line"></i>
+              Reset
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Goals -->
+
+      <section class="goals-box">
+        <div class="goals-header">
+          <div>
+            <h2>Goals</h2>
+            <p>Stay Focused, take action and achieve your goals⭐️</p>
+          </div>
+          <button class="goalsCloseBtn"><i class="ri-close-fill"></i></button>
+        </div>
+
+        <form class="goal-form">
+          <input type="text" placeholder="Enter your task...." />
+          <button type="submit">Add</button>
+        </form>
+
+        <div class="goal-list">
+        </div>
+      </section>
 
       <aside class="side-menu">
         <button class="side-todo-btn"><i>✅</i><span>Todo</span></button>
         <button class="side-plan-btn"><i>📅</i><span>Planner</span></button>
         <button class="side-quote-btn"><i>💬</i><span>Quotes</span></button>
         <button class="side-timer-btn"><i>⏱️</i><span>Timer</span></button>
-        <button><i>🎯</i><span>Goals</span></button>
+        <button class="side-goal-btn"><i>🎯</i><span>Goals</span></button>
       </aside>
 
       <section class="quote-card">
