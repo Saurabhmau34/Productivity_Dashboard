@@ -207,9 +207,6 @@ goalForm.addEventListener("submit", (e) =>{
   
 });
 
-// theme
-
-
 
 //  todo render
 
